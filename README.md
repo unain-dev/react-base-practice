@@ -1,2 +1,2 @@
-# react-tutorial
-리액트 튜토리얼 연습 레포지토리
+# react-toyPJT
+리액트 토이프로젝트 연습 레포지토리
