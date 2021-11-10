@@ -14,7 +14,7 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        function App() {
+        function MinutesToHours() {
             const [inverted, setInverted] = React.useState(0);
             const onChange = (event) => {
                 setInverted(event.target.value);
@@ -57,7 +57,7 @@
         }
 
         const root = document.getElementById("root");
-        ReactDOM.render(<App />, root);
+        ReactDOM.render(<MinutesToHours />, root);
     </script>
 </body>
 
