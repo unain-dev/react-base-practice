@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--PropTypes CDN 추가-->
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+
+    <title>Props Test 01</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        function Btn({text, fontSize = 16}){  // 비구조할당으로 받을 때, fontSize default를 지정해줌.
+            console.log(text, "button is rendered");
+            return (
+                <button 
+                style={{
+                    backgroundColor : "tomato",
+                    color : "white",
+                    padding : "10px 20px",
+                    border : 0,
+                    borderRadius : 10,
+                    fontSize : fontSize,
+                }}>{text}</button>
+            )
+        }
+
+        const MemorizeBtn = React.memo(Btn); 
+
+        // Props의 타입을 명시적으로 지정해주기 위해서 PropTypes를 사용해서 지정해준다.
+        // 지금은 CDN 방식으로 진행하고 있기 때문에 헤더에 CDN을 선언했다.
+        // https://www.npmjs.com/package/prop-types
+        Btn.propTypes = {
+            text : PropTypes.String.isRequired, //필수라면 타입지정.isRequired로 지정해주면 됨.
+            font : PropTypes.Number,
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Btn text = "Save Changes" fontSize = {20}/> 
+                    <Btn text = "Continue" />
+                </div>
+            )
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</body>
+
+</html>

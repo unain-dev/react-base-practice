@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Props Test 01</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+{/*
+    1. onChange는 그저 props의 이름일뿐. 이벤트 리스너가 아님.
+        얘가 이벤트 리스너가 되려면 자식 컴포넌트에서 props로 받고,
+        어떤 한 태그에 onClick={onClick}으로 지정해줘야 가능함.
+    2. 여기서 중요한 것은. 우리가 변수 뿐만 아니라 함수도 보낼 수 있다는 것!
+    3. 만약 부모 컴포넌트에서의 props를 보내는 이름을바꾸면 자식 컴포넌트에서도 바꿔야함.
+    4. 그런데 value가 다시 set되면 영향을 안받는 아래의 버튼까지 리로드된다.
+        why? 해당 함수에서 사용중인 useState의 값이 바뀌면 리턴하고 있는 템플릿이 통째로 리렌더링되기 때문.
+        하지만 useState에 영향을 받지 않는 부분까지 리렌더링 되므로 성능 저하가 생긴다.
+        -> 이럴 필요가 전혀 없음! 그래서 React.Memo를 사용한다!
+    5. React.Memo : 리액트에게 기억하라고 알려주는 것. 
+        즉, 변경되지 않는 값은 다시 리렌더링 되지 않도록 기억시키는 것.
+        이번 예제에서는 아래에 위치한 버튼의 props가 Memo해야할 Props에 속함.
+        useState로 어떤 값의 변화에도 영향을 받지 않는 애를 Memo로 설정해야한다.
+*/}
+
+        // 자식 컴포넌트
+        function Btn({text, onClick}){ 
+            console.log(text, "button is rendered");
+            return (
+                <button 
+                onClick = {onClick}
+                style={{
+                    backgroundColor : "tomato",
+                    color : "white",
+                    padding : "10px 20px",
+                    border : 0,
+                    borderRadius : 10,
+                    fontSize : 16,
+                }}>{text}</button>
+            )
+        }
+
+        // React.Memo로 자식컴포넌트인 Btn 컴포넌트를 지정해줌.
+        // 하지만 쓰이는 모든 Btn 컴포넌트마다 Memo가 되는 것이 아니고, 
+        // 우리가 변수로 할당해준 memorizeBtn 컴포넌트를 사용해야지만 Memo 기능을 사용 가능함.
+        const MemorizeBtn = React.memo(Btn); 
+
+        // 부모 컴포넌트
+        function App() {
+            const [value, setValue] = React.useState("Save Changes");
+            const changeValue = () => {
+                setValue("Revert Changes");
+            }
+            return (
+                <div>
+                    <Btn text = {value} onClick={changeValue}/> 
+                    <Btn text = "Continue" />
+                    <MemorizeBtn text ="Continue2"/> {/* React.Memo의 사용 */}
+                </div>
+            )
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</body>
+
+</html>

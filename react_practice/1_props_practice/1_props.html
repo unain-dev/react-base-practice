@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Props Test 01</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        // function Btn(props){ //props는 첫번째 파라미터임. 두번째 파라미터는 없음.
+        //     //props는 object 형식으로 전달된다.
+        //     return (
+        //         <button style={{
+        //             backgroundColor : "tomato",
+        //             color : "white",
+        //             padding : "10px 20px",
+        //             border : 0,
+        //             borderRadius : 10,
+        //         }}>{props.msg}</button>
+        //     )
+        // }
+
+        function Btn({text, big}){ //props가 object여서 비구조할당으로 받아올 수 있다. 비구조할당은 {}로 감싸서 받아야함. 주의!
+            //props는 object 형식으로 전달된다.
+            return (
+                <button style={{
+                    backgroundColor : "tomato",
+                    color : "white",
+                    padding : "10px 20px",
+                    border : 0,
+                    borderRadius : 10,
+                    fontSize : big ? 20 : 16, //태그 내부에서 props로 받은 변수는 그냥 js 변수처럼 사용
+                }}>{text}</button> // 태그 사이에서는 그냥쓰면 텍스트가 되므로 {}로 감싸서 변수 사용함.
+            )
+        }
+
+        function App() {
+            // 부모 컴포넌트(렌더링되는 컴포넌트)의 return 영역은 JSX이다.
+            return (
+                <div>
+                    {/* true or false나 변수는 {}로 감싸서 넘겨줌. */}
+                    <Btn text = "SaveButton" big={true}/> 
+                    <Btn text = "ConfirmButton" big={false}/>
+                </div>
+            )
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</body>
+
+</html>
