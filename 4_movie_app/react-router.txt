@@ -1,0 +1,64 @@
+1. npm install react-router-dom
+or
+npm i react-router-dom@5.3.0
+
+2. 스크린(라우터) 별로 생각해서 라우터로 나눌 단위를 생각 해야 함.
+
+3. App.js
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+4. App.js
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/hello">
+          <h1>Hello</h1>
+        </Route>
+        <Route path="/movie">
+          <Detail />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
+
+- Route : URL을 보고 있다가, URL이 바뀌면 해당 URL에 맞는 어떤 페이지를 보여줄지 매칭함.
+- Switch : 한번에 하나의 라우터만 보여줌.
+
+5. Movie.js
+<h2>
+    <Link to="/movie">{title}</Link>
+</h2>
+
+- Link : 브라우저를 새로고침 없이도 다른 페이지로 라우팅 시켜줌. URL을 바꿈.
+(a 태그를 쓰면 브라우저가 새로고침 되는 단점.)
+
+6. dynammic URL
+    6-1. path="/경로/:변수"로 route를 설정하면 변수를 파라미터로 URL에 담아 보낼 수 있음.
+        즉, URL에 변수를 담아 보내기로 약속하는 것, 라우터에 알려주는 것임.
+        App.js
+        <Route path="/movie/:id">
+        -> <Route path="/movie/:변수명">
+
+    6-2.Link에 변수를 넣어서 URL에 보내줌.
+        Movie.js 
+        <h2>
+            <Link to={`/movie/${id}`}>{title}</Link>
+        </h2>
+        -> <Link to={`/movie/${변수명}`}>{title}</Link>
+
+    6-3. URL에 담겨서 보내진 파라미터 변수를 받아서 쓰기
+        Detail.js
+        import { useEffect } from "react";
+        import { useParams } from "react-router-dom";
+        ...
+        const { id } = useParams();
+        -> import { useParams } from "react-router-dom";
+        -> const { 변수명 } = useParams();
+
+    => 이 3단계의 변수명이 모두 같아야 한다.
+
