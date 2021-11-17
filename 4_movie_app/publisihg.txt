@@ -1,0 +1,23 @@
+<github page에 배포하기>
+
+1. npm i gh-pages
+    - gh-pages : 결과물을 github pages에 업로드 할 수 있게 해주는 패키지.
+
+2. npm run build
+    - package.json의 build scripts : 이 스크립트를 실행하면 웹사이트의 production ready code를 생성.
+    -> build라는 폴더가 생성됨. 이 빌드 폴더는 우리 프로젝트가 브라우저가 이해할 수 있는 언어로 압축&최적화 된 결과물임.
+
+3. package.json의 맨 마지막 오브젝트로 아래 코드 추가
+    , "homepage": "https://계정ID/github.io/레포지토리명"
+    - 레포지토리명은 git remote -v command로 확인 가능.
+
+4. package.json의 scripts 오브젝트 내부에 맨 마지막으로 아래 코드 추가
+    "deploy" : "gh-pages -d build",
+    "predeploy" : "npm run build"
+    -> "predeploy"를 선언하면, 5번을 실행시킬 때, predeploy에 선언한 npm run build를 먼저 실행하기 때문에 2번을 안해도 됨. 즉, build 폴더를 삭제 해도 됨.
+    -> gh-pages -d build : build 폴더를 package.json의 "homepage"로 4번에 선언한 홈페이지에 배포하도록 함.
+
+5. npm run deploy
+
+6. 수정 후 업데이트 하고 싶으면, 5번을 하면 자동으로 다시 빌드되어서 그 폴더가 github pages에 push 됨.
+    단, 업데이트에 시간이 좀 걸림.
