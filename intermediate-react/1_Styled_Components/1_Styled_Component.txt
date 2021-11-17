@@ -1,0 +1,24 @@
+* styled-components의 장점
+    - js 방식으로 inner에 써주지 않아도 된다.
+    - 해당 태그가 어떤 역할인지 일일이 style을 살펴보지 않아도 파악이 가능하다(네이밍이 가능해서)
+
+* styled-component 동작 방식
+    1. styled-components가 임의로 태그의 클래스명을 만들어 줌.
+    2. 스타일 내용을 임의로 만든 태그의 클래스이름에 css 형식으로 할당해줌.
+
+
+1. npm i styled-components
+
+2. styled-components import
+    import styled from "styled-components";
+
+3. styled component 선언
+    const 변수 = styled.태그명`스타일 내용`;
+        -> 반드시 백틱을 쓸 것!
+        -> 태그명은 존재하는 태그여야한다.
+        -> 스타일 내용에는 css 내용이 들어가야한다.(js 내용 입력 금지)
+
+4. styled component 사용
+    return(
+        <변수명/>
+    );
