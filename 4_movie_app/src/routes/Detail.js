@@ -30,7 +30,9 @@ function Detail() {
       ) : (
         <div>{movie.id}</div>
       )} */}
-      {movie.length <= 0 ? null : (
+      {Object.keys(movie).length === 0 ? (
+        "Loading..."
+      ) : (
         <div>
           <img src={movie.medium_cover_image} alt={movie.title} />
           <h2>{movie.title}</h2>
