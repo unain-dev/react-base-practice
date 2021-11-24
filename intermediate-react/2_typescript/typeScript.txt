@@ -1,0 +1,14 @@
+1. typescript 설치
+    - 프로젝트부터 새로 설치 : npx create-react-app 앱이름 --template typescript
+        -> 그 다음 확장자를 .js가 아니라 .ts, .tsx로 바꿔야 함.
+    - 원래 있는 프로젝트에 설치 : npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+2. Definitely type : typescript용 styled-components 설치
+- npm i --save-dev @types/styled-components
+    -> 일반 styled-components는 ts로 만들어진 모듈이 아니기 때문에 새로 설치해줘야한다.
+    -> @types : 아주 큰 github repository. 모든 유명한 npm 라이브러리를 가지고 있는 저장소.
+                이걸통해 ts에게 라이브러리나 패키지의 type definition(해당 라이브러리의 소스코드를 보고, ts에게 해줄 설명을 만들어 내는 것.)을 알려줌.
+                이걸 사용해서 ts에게 내가 사용하는 js 라이브러리를 설명해줌.
+
+
+3. 
