@@ -1,14 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
-
-// 1. optiona props
-// 2. default props
 
 interface ContainerProps {
   bgColor: string;
   borderColor: string;
 }
 
-// 1-2. 이 styled-components는 ContainerProps 를 사용하고 있으므로 무조건 bgcolor, borderColor 둘 다 사용해야함.
 const Container = styled.div<ContainerProps>`
   width: 200px;
   height: 200px;
@@ -17,22 +14,24 @@ const Container = styled.div<ContainerProps>`
   border: 1px solid ${(props) => props.borderColor};
 `;
 
-// 1-1. optional props로 만드려면 interface의 key에 ?를 끝에 붙여주면 됨.
 interface CircleProps {
   bgColor: string;
   borderColor?: string;
-  text?: string;
 }
 
-// 2-1. default props : props를 받아올 때 =로 default 값을 할당시킴. 이건 ts는 아니고 es6 문법.
-function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
-  return (
-    // 1-3. borderColor가 있으면 인가시켜주고, 없으면 bgColor로 보내주도록 삼항연산자 수행. (부모 컴포넌트의 borderColor는 optional이라서 인가 가 안될 수도 있음.)
-    // 만약, 이 삼항연산자가 없이 bordercolor를 없애면 ContainerProps에서는 borderColor가 필수이기 때문에 오류 발생.
-    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
-      {text}
-    </Container>
-  );
+function Circle({ bgColor, borderColor }: CircleProps) {
+  // 1. useState 선언 : ts에서는 useState(초기값);에서 초기값으로 넣어준 데이터의 자료형으로 계속해서 state 값을 가질 것이라고 예상.
+  // -> 이미 ts가 자동으로 이렇게 초기값 타입으로 쭉 갈거라고 예상하지만, 명시적으로 선언해 줄 수도 있다.
+  // -> 명시적 선언 : useState<자료형>(초기값);으로 선언한다.
+  const [value, setValue] = useState<string>("");
+  
+  //const [value, setValue] = useState(""); -> 오류 안남. 초기 값이 string이라 ts는 이 state의 자료형을 string으로 계속 인식한다.
+  
+  //setValue(1) -> 에러 발생
+  //setValue("hi") -> 정상작동
+  //setValue(true) -> 에러 발생
+  
+  return <Container bgColor={bgColor} borderColor={borderColor ?? bgColor} />;
 }
 
 export default Circle;
