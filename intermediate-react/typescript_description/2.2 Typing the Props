@@ -1,0 +1,4 @@
+* ts에게 react component를 어떻게 설명하는지
+
+* component를 type한다 = component에게 type을 준다. =  ts에게 뭐가 뭔지 설명해준다.
+
