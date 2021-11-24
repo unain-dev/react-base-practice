@@ -1,35 +1,38 @@
 import styled from "styled-components";
 
-// 0. ts 프로젝트 생성 후,  npm i styled-components 그 후 npm i --save-dev @types/styled-components
+// 1. optiona props
+// 2. default props
 
-// 2. interface : ts 컨셉. object shape(type)을 ts에게 설명해주는 ts의 개념.
-//   -> 이 전에는 const x = (a : number, b:number) => a+b 이렇게 타입을 설명 했음.
-//      즉 , interface는 object혹은 변수의 타입을 알려주는 것임.
-//      이 예시에서는 prop의 타입을 ts에 알려주고 있음.
-interface CircleProps {
+interface ContainerProps {
   bgColor: string;
+  borderColor: string;
 }
 
-// 4. ts에게 bgColor를 styled-component에게도 보내고 싶다고 알림.
-//    -> 원래에는 ContainerProps라는 인터페이스를 만들고 CircleProps처럼 만들어서, styled.div<ContainerProps>``로 넘겨줘도 됨.
-//        그러나 CircleProps나 ContainerProps나 둘 다 같은 string의 bgColor 하나만을 object로 가지고 있음.
-//        중복 코드를 제거하기 위해 CircleProps를 Container의 styled-component로 받는다.
-const Container = styled.div<CircleProps>`
+// 1-2. 이 styled-components는 ContainerProps 를 사용하고 있으므로 무조건 bgcolor, borderColor 둘 다 사용해야함.
+const Container = styled.div<ContainerProps>`
   width: 200px;
   height: 200px;
   background-color: ${(props) => props.bgColor};
   border-radius: 100px;
+  border: 1px solid ${(props) => props.borderColor};
 `;
 
-// 1. bgColor : Circle component의 prop. ts에서는 prop에 대한 타입을 정의해주지 않으면 오류가 난다. 그래서 prop을 ts로 보호해 줘야함.
-// 3. CircleProps의 타입이 뭔지 컴포넌트에 알려줌.
-//    -> 즉, bgColor는 CircleProps의 object이다. prop으로 받은 bgColor와 CircleProps interface 껍데기를 연결시킴.
-//    -> 이제 ts는 CircleProps 안에 bgColor가 있는 것을 안다.
-function Circle({ bgColor }: CircleProps) {
-  return <Container bgColor={bgColor} />;
+// 1-1. optional props로 만드려면 interface의 key에 ?를 끝에 붙여주면 됨.
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string;
+  text?: string;
 }
 
-// 5. 하지만 지금은 Props가 required이기 때문에 App.tsx에서 prop을 안보내주면 오류가 난다!
-//    -> 해결 방법 : 다음 2.3 Optional Props 챕터에서 나올 예정.
+// 2-1. default props : props를 받아올 때 =로 default 값을 할당시킴. 이건 ts는 아니고 es6 문법.
+function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
+  return (
+    // 1-3. borderColor가 있으면 인가시켜주고, 없으면 bgColor로 보내주도록 삼항연산자 수행. (부모 컴포넌트의 borderColor는 optional이라서 인가 가 안될 수도 있음.)
+    // 만약, 이 삼항연산자가 없이 bordercolor를 없애면 ContainerProps에서는 borderColor가 필수이기 때문에 오류 발생.
+    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+      {text}
+    </Container>
+  );
+}
 
 export default Circle;
