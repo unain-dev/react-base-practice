@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]); // 빈 배열을 주면 오류!
+  const [coins, setCoins] = useState([]); // 빈 괄호을 주면 오류!
 
   //첫 렌더링 시만 실행.
   useEffect(() => {

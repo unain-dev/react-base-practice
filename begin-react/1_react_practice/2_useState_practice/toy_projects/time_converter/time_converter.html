@@ -1,64 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+    ></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <title>Time Converter</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
     <script type="text/babel">
-        function MinutesToHours() {
-            const [inverted, setInverted] = React.useState(0);
-            const onChange = (event) => {
-                setInverted(event.target.value);
-            }
-            const reset = () => { setInverted(0) };
+      function MinutesToHours() {
+        const [amount, setAmount] = React.useState(0);
+        const onChange = (event) => {
+          setAmount(event.target.value);
+        };
+        const reset = () => {
+          setAmount(0);
+        };
 
-            const [flipped, setFlipped] = React.useState(false);
-            const onFlip = () => {
-                setFlipped((current) => !current);
-                reset();
-            };
+        const [flipped, setFlipped] = React.useState(false);
+        const onFlip = () => {
+          // 여기에서 current는 flipped 인자를 파라미터로 받아와서 변수로 선언해준 것.
+          setFlipped((current) => !current);
+          reset();
+        };
 
-            return (
-                <div>
-                    <h1>Time Converter using by useState</h1>
-                    <div>
-                        <label htmlFor="inverted">inverted : </label>
-                        <input disabled={flipped} 
-                            value={ flipped ? inverted*60 : inverted} 
-                            placeholder="inverted" 
-                            onChange={onChange} 
-                            type="number" 
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="hours">Hours : </label>
-                        <input 
-                            disabled={!flipped} 
-                            value={ flipped ? inverted : Math.round(inverted / 60)}
-                            placeholder="Hours" 
-                            onChange={onChange} 
-                            type="number" 
-                        />
-                    </div>
+        return (
+          <div>
+            <h1>Time Converter using by useState</h1>
+            <div>
+              <label htmlFor="amount">amount : </label>
+              {/* flipped==true이면 분-> 시, false이면 시 -> 분. // value에서
+                보여줄때 애초에 inverted를 *60해서 분으로 보여줌.*/}
+              <input
+                disabled={flipped}
+                value={flipped ? amount * 60 : amount}
+                placeholder="amount"
+                onChange={onChange}
+                type="number"
+              />
+            </div>
+            <div>
+              <label htmlFor="hours">Hours : </label>
+              {/* flipped가 false이면, 활성화되고 60으로 나눈걸 일의자리까지
+              반올림해서 시로 보여줌. */}
+              <input
+                disabled={!flipped}
+                value={flipped ? amount : Math.round(amount / 60)}
+                placeholder="Hours"
+                onChange={onChange}
+                type="number"
+              />
+            </div>
 
-                    <button onClick={reset}>Reset</button>
-                    <button onClick={onFlip}>전환</button>
-                </div>
-            )
-        }
+            <button onClick={reset}>Reset</button>
+            <button onClick={onFlip}>전환</button>
+          </div>
+        );
+      }
 
-        const root = document.getElementById("root");
-        ReactDOM.render(<MinutesToHours />, root);
+      const root = document.getElementById("root");
+      ReactDOM.render(<MinutesToHours />, root);
     </script>
-</body>
-
+  </body>
 </html>
