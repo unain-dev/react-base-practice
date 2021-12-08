@@ -20,11 +20,22 @@ function MovieList() {
 
   return (
     <div>
-      {loading && <p>loading...</p>}
-      {loading == false &&
+      {loading ? (
+        <p>loading...</p>
+      ) : (
         movies.map((movie, index) => (
-          <Movie id={movie.id} title={movie.title} rating={movie.rating} />
-        ))}
+          <Movie
+            id={movie.id}
+            key={movie.id}
+            year={movie.year}
+            coverImg={movie.medium_cover_image}
+            title={movie.title}
+            summary={movie.summary}
+            genres={movie.genres}
+            rating={movie.rating}
+          />
+        ))
+      )}
     </div>
   );
 }
