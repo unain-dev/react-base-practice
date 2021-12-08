@@ -23,7 +23,7 @@ function MovieList() {
       {loading ? (
         <p>loading...</p>
       ) : (
-        movies.map((movie, index) => (
+        movies.map((movie) => (
           <Movie
             id={movie.id}
             key={movie.id}
