@@ -16,7 +16,8 @@ function Detail() {
         console.log("fail");
       }
     );
-  }, []);
+    // console.log(movie);
+  }, [id]);
 
   return (
     <div>
