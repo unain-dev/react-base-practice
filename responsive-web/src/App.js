@@ -28,6 +28,8 @@ const text = `ales. Nam accumsan gravida posuere. Morbi ultrices justo sed euism
           cursus lobortis. Nam accumsan varius pellentesque. In eros justo,
           fermentum et velit eget, viverra varius odio.`;
 
+// div 전체가 아래로 내려가는 형식(크기 변동 없음)
+
 const Grid = styled.div`
   float: left;
   background: skyblue;
@@ -41,6 +43,7 @@ const Grid2 = styled(Grid)`
 `;
 
 // ====================================================
+// 네이버처럼 스크롤 생기는 형식
 
 // body 역할.
 const Body = styled.div`
@@ -69,17 +72,48 @@ const ScrollBox2 = styled(ScrollBox)`
   background: green;
 `;
 
+// ====================================================
+// 크기가 변동적.
+
+const DynamicBody = styled.div`
+  background: purple;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const DynamicWrapper = styled.div`
+  border: solid red;
+  width: 900px;
+`;
+
+const DynamicBox = styled.div`
+  background: black;
+  color: white;
+  // width: 50%;
+  width: 80vw;
+`;
+
+const DynamicBox2 = styled(DynamicBox)`
+  background: blue;
+`;
+
 function App() {
   return (
     <>
-      {/* <Grid>{text}</Grid>
-      <Grid2>{text}</Grid2> */}
+      <Grid>{text}</Grid>
+      <Grid2>{text}</Grid2>
       <Body>
         <ScrollWrapper>
           <ScrollBox>{text}</ScrollBox>
           <ScrollBox2>{text}</ScrollBox2>
         </ScrollWrapper>
       </Body>
+      <DynamicBody>
+        <DynamicWrapper>
+          <DynamicBox>{text}</DynamicBox>
+          <DynamicBox2>{text}</DynamicBox2>
+        </DynamicWrapper>
+      </DynamicBody>
     </>
   );
 }
